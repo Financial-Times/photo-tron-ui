@@ -86,7 +86,9 @@ module.exports = {
       comments:false
     }),
     new webpack.EnvironmentPlugin([
-      'NODE_ENV'
+      'NODE_ENV',
+      'API_PATH',
+      'API_PATH_AUTH'
     ])
   ]
 };

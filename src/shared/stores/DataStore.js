@@ -2,14 +2,19 @@ import { observable } from "mobx";
 
 class DataStore {
   @observable loading = true;
-  @observable data = [];
+  @observable getting = false;
+  @observable images = [];
 
   isLoading() {
     return this.loading;
   }
 
-  retrieveData() {
-    return this.data;
+  isGetting() {
+    return this.getting;
+  }
+
+  retrieveImages() {
+    return this.images;
   }
 }
 

@@ -1,0 +1,15 @@
+.tab {
+  &__pane {
+    padding: 0 15px 10px 15px;
+  }
+}
+
+.isGetting {
+  margin: 20px 0;
+  width: 100%;
+  &__row {
+    display: block;
+    padding: 5px 0;
+    text-align: center;
+  }
+}

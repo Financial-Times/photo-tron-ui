@@ -16,18 +16,23 @@ const app = express();
 const compiler = webpack(config);
 const router = express.Router();
 
+const bodyParser = require('body-parser');
+const bodyParserJson = bodyParser.json();
+
 app.use(webpackMiddleware(compiler));
 
-function apiBackendRequest(req, res, apiRoute) {
+function apiBackendRequest(req, res, apiRoute, method) {
   const apiPath = process.env.API_PATH;
   const apiUrl = `${apiPath}/${apiRoute}`;
-  const apiKey = process.env.API_KEY;
-  const xApiKey = process.env.X_API_KEY;
-  const isProduction = process.env.NODE_ENV === 'prod' ? true : false;
+
+  const apiPathAuth = process.env.API_PATH_AUTH;
+
+  const isProduction = process.env.NODE_ENV === 'prod';
+  const requestMethodAndApiUrl = method === 'POST' ? request(method, apiUrl).send(req.body) : request('GET', apiUrl);
 
   if (isProduction) {
-    request.get(apiUrl)
-      .set(`api-key`, apiKey)
+    requestMethodAndApiUrl
+      .set(`Authorization`, apiPathAuth)
       .end(function (err, resp) {
         if (err || !resp.ok) {
           console.log(resp.toError());
@@ -36,8 +41,8 @@ function apiBackendRequest(req, res, apiRoute) {
         }
       })
   } else {
-    request.get(apiUrl)
-      .set(`x-api-key`, xApiKey)
+    requestMethodAndApiUrl
+      .set(`Authorization`, apiPathAuth)
       .end(function (err, resp) {
         if (err || !resp.ok) {
           console.log(resp.toError());
@@ -56,7 +61,7 @@ let sessionOptions = {
 }
 
 app.set('trust proxy', 1) // trust first proxy
-//app.use(session(sessionOptions));
+app.use(session(sessionOptions));
 
 function bypassS3oAuth(req) {
   return process.env.NODE_ENV === 'test';
@@ -70,24 +75,27 @@ app.use('/',router);
 router.use(expressWebService({
     manifestPath: path.join(__dirname, 'package.json')
 }));
-// router.use(function (req, res, next) {
-//   let sess = req.session;
-//   if (sess.isAuthenticated || bypassS3oAuth(req)) {
-//     sess.isAuthenticated = true;
-//     return next();
-//   } else {
-//     app.set('s3o-cookie-ttl', 86400000);
-//       // Rewrite request header 'host' to force S3O to redirect to required tagme url
-//       req.headers.host = (process.env.SERVER_HOSTNAME)? process.env.SERVER_HOSTNAME : req.headers.host;
-//       authS3O(req, res, next)
-//   }
-// })
+router.use(function (req, res, next) {
+  let sess = req.session;
+  if (sess.isAuthenticated || bypassS3oAuth(req)) {
+    sess.isAuthenticated = true;
+    return next();
+  } else {
+    app.set('s3o-cookie-ttl', 86400000);
+      // Rewrite request header 'host' to force S3O to redirect to required tagme url
+      req.headers.host = (process.env.SERVER_HOSTNAME)? process.env.SERVER_HOSTNAME : req.headers.host;
+      authS3O(req, res, next)
+  }
+});
 
 router.use(express.static(__dirname + '/_build'));
 
-// router.get('/api/genre*', function response(req, res){
-//   apiBackendRequest(req, res, 'genre');
-// });
+router.post('/api/post', bodyParserJson, function response(req, res){
+  apiBackendRequest(req, res, `photos-by-text`, 'POST');
+});
+router.get('/api/get/:uuid', function response(req, res){
+  apiBackendRequest(req, res, `photos-by-uuid/${req.params.uuid}`);
+});
 
 router.get('*', function response(req, res) {
   res.sendFile(path.join(__dirname, '_build/index.html'));

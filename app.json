@@ -6,6 +6,12 @@
   "env": {
     "NODE_ENV": {
       "required": true
+    },
+    "API_PATH": {
+      "required": true
+    },
+    "API_PATH_AUTH": {
+      "required": true
     }
   },
   "formation": {
