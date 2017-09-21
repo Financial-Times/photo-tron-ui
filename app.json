@@ -1,0 +1,19 @@
+{
+  "name": "photo-tron-ui",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "NODE_ENV": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
