@@ -1,0 +1,31 @@
+$ft-color: #FFF1E5;
+$primary-bg: #e5e5e5;
+$primary-1: #000000;
+$primary-2: #CCCCCC;
+$primary-3: #555555;
+$primary-4: #FFFFFF;
+$primary-5: #B2B2B2;
+$primary-6: #15245a;
+$primary-7: #BABABA;
+$primary-8: #DDDDDD;
+$primary-9: #FAFAFA;
+$primary-10: #FFD700;
+$primary-11: #F6F6F6;
+$primary-12: #333333;
+
+:export {
+  ftColor: $ft-color;
+  primaryBgColor: $primary-bg;
+  primaryColor: $primary-1;
+  primaryColor2: $primary-2;
+  primaryColor3: $primary-3;
+  primaryColor4: $primary-4;
+  primaryColor5: $primary-5;
+  primaryColor6: $primary-6;
+  primaryColor7: $primary-7;
+  primaryColor8: $primary-8;
+  primaryColor9: $primary-9;
+  primaryColor10: $primary-10;
+  primaryColor11: $primary-11;
+  primaryColor12: $primary-12;
+}
