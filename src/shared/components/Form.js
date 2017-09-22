@@ -15,8 +15,8 @@ export default class Form extends React.Component {
     super(props);
     this.state = {
       value: 1,
-      uuid: 'Default UUID value',
-      body: 'Donald Trump'
+      uuid: '',
+      body: ''
     }
   }
 
@@ -110,7 +110,7 @@ export default class Form extends React.Component {
                       color="primary"
                       onTouchTap={this.handleSearchOnTouchTap.bind(this, 'uuid')}
                     >
-                      Primary
+                      Suggest
                     </Button>
                   </Grid>
                 </div>
@@ -128,7 +128,7 @@ export default class Form extends React.Component {
                     <TextField
                       defaultValue={this.state.body}
                       onChange={this.handleBodyTextFieldOnChange}
-                      label="Please enter body copy"
+                      label="Please enter text"
                       fullWidth
                       margin="normal"
                       multiline
@@ -144,7 +144,7 @@ export default class Form extends React.Component {
                       color="primary"
                       onTouchTap={this.handleSearchOnTouchTap.bind(this, 'body')}
                     >
-                      Primary
+                      Suggest
                     </Button>
                   </Grid>
                 </div>
