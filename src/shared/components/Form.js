@@ -132,7 +132,7 @@ export default class Form extends React.Component {
                       fullWidth
                       margin="normal"
                       multiline
-                      rows="4"
+                      rows="8"
                     />
                   </Grid>
                   <Grid

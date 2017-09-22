@@ -5,6 +5,8 @@ import Typography from 'material-ui/Typography';
 import Collapse from 'material-ui/transitions/Collapse';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import IconButton from 'material-ui/IconButton';
+import { FormControlLabel } from 'material-ui/Form';
+import Checkbox from 'material-ui/Checkbox';
 
 export default class Single extends React.Component {
   constructor(props) {
@@ -41,10 +43,18 @@ export default class Single extends React.Component {
           </CardMedia>
           <CardContent>
             <Typography
-              component="h5"
+              component="h3"
             >
               {title}
             </Typography>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="checkedA"
+                />
+              }
+              label="Select this Photo"
+            />
           </CardContent>
           <CardActions disableActionSpacing>
             <IconButton
